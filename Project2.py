@@ -1,7 +1,7 @@
 """
     Class:   CS-510
-    Author:  <Complete this>
-    Date:    <Complete this>
+    Author:  Duke Pham
+    Date:    20 October 2025
 
     Description:  Each function that needs to be completed has a comment at the top with
                   TODO written in it with instructions.
@@ -95,6 +95,7 @@ def showErrorHandling() -> None:
     try:
        
        #TODO Insert your code here to cause a divide by zero error
+       print("hello world!")
     
     except ZeroDivisionError:
         print("You can't divide by zero!")
