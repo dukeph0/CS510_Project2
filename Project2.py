@@ -82,16 +82,16 @@ def getTitle(pageNumber, currentWidth):
     fullHeader = ""
     for i in range(pageCount):
         # Determine if this option is the currently active one
-        is_active = i == pageNumber
+        isActive = i == pageNumber
 
         # Add the page map string, highlighting the active page
-        header_text = pageMap[i]
+        headerText = pageMap[i]
 
-        if is_active:
+        if isActive:
             # Add reverse video attribute for the active page in the header
-            fullHeader += f"| [ {header_text} ] "
+            fullHeader += f"| [ {headerText} ] "
         else:
-            fullHeader += f"| {header_text} "
+            fullHeader += f"| {headerText} "
 
     fullHeader += "|"
 
@@ -425,14 +425,14 @@ def display_startup_banner():
     print("━┏┛┏━┛┏━┛┃ ┃┏━┛┏━┛┏━┛┃ ┃┏━┃┏━┛  ┏━┛┏━┃┃  ┃ ┃━┏┛┛┏━┃┏━ ┏━┛")
     print(" ┃ ┏━┛┃  ┏━┃━━┃┏━┛┃  ┃ ┃┏┏┛┏━┛  ━━┃┃ ┃┃  ┃ ┃ ┃ ┃┃ ┃┃ ┃━━┃")
     print(" ┛ ━━┛━━┛┛ ┛━━┛━━┛━━┛━━┛┛ ┛━━┛  ━━┛━━┛━━┛━━┛ ┛ ┛━━┛┛ ┛━━┛")
-    print(" System Optimization Benchmarker")
+    print(" CS510: System Optimization Benchmarker")
     print("=" * 60)
     print("\nStarting application... Press Enter to continue.")
 
     # Wait for the user to acknowledge the banner
     input()
 
-
+# Wanted to do something more fancy
 if __name__ == "__main__":
 
     display_startup_banner()
