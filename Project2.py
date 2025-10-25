@@ -242,6 +242,8 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
 
 def showThreadingExample(win, currentHeight, currentWidth) -> None:
+    # Start timer
+    startTime = time.perf_counter()
  
     # Declare 'threadLog' as a global variable to modify the list defined outside this function
     global threadLog
@@ -273,6 +275,22 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
     if done_message_row < currentHeight - 1:
         win.addstr(done_message_row, 2, "Done With Threading!", curses.A_BOLD)
 
+    # Stop timer and calculate elapsed time
+    endTime = time.perf_counter()
+    elapsedTime = (endTime - startTime) * 1000  # Convert to milliseconds
+
+    # Determine the row to print the timing result 
+    timing_row = done_message_row + 2
+    
+    # Display the timing result to the curses window
+    if timing_row < currentHeight - 1:
+        timing_message = f"Execution Time (w/ Join): {elapsedTime:.3f} ms"
+        win.addstr(timing_row, 2, timing_message)
+
+    explanation_row = timing_row + 1
+    if explanation_row < currentHeight - 1:
+        win.addstr(explanation_row, 2, "(NOTE: Time updates on every screen refresh.)")
+
 
 """
    This function shows system error handling.
@@ -283,6 +301,8 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
 
 
 def showErrorHandling(win, currentHeight, currentWidth) -> None:
+    # Start timer
+    startTime = time.perf_counter()
    
     # Display function title
     win.addstr(3, 2, "Error Handling Demonstration:", curses.A_BOLD)
@@ -303,6 +323,16 @@ def showErrorHandling(win, currentHeight, currentWidth) -> None:
 
     finally:
         win.addstr(8, 2, "Execution complete.", curses.A_BOLD)
+
+        # Stop timer and calculate elapsed time
+        endTime = time.perf_counter()
+        elapsedTime = (endTime - startTime) * 1000 # Convert to millseconds
+
+        # Display the timing result in the curses window
+        timingMessage = f"Execution Time: {elapsedTime:.3f} ms"
+        win.addstr(10, 2, timingMessage)
+
+        win.addstr(11, 2, "NOTE: Time updates on every screen refresh.")
 
 # Function map for five page applications 
 PAGES = [
