@@ -3,11 +3,10 @@ Class:   CS-510
 Author:  Duke Pham
 Date:    20 October 2025
 
-Description:  Each function that needs to be completed has a comment at the top with
-              TODO written in it with instructions.
-
-              Within the function is a section with the comment #TODO where you will
-              insert your code as per the instructions.
+Description:  This program is a multi-page, interactive Terminal User Interface (TUI) built
+              using the curses and psutil libraries. It displays real-time system diagnositcs
+              (CPU, Memory, Disk Usage) and includes separate pages to demonstrate multi-threading
+              and error handling concepts
 """
 
 """
