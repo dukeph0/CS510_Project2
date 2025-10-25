@@ -18,20 +18,8 @@ import threading
 import curses
 
 """
-  Three provided Utility functions to use
+  Provided Utility functions
 """
-# def printBlankLines(lines: int):
-#     for i in range(lines):
-#         print("")
-
-threadLog = []
-
-# def printMsg1(num):
-#     print("Thread 1 cubed: {}" .format(num * num * num))
-
-
-# def printMsg2(num):
-#     print("Thread 2 squared: {}" .format(num * num))
 
 
 def printMsg1(num):
@@ -52,6 +40,7 @@ minWidth = 80
 minHeight = 21
 pageCount = 5
 currentPage = 0
+threadLog = []
 
 
 # Convert bytes to Gigabytes
@@ -169,10 +158,7 @@ def getFileDiskUsageStatistics(win, currentHeight, currentWidth) -> None:
 
 
 def getMemoryStatistics(win, currentHeight, currentWidth) -> None:
-    # print("Getting Memory Statistics")
-
-    # TODO INSERT YOUR CODE HERE
-
+    
     # Memory Stats
     mem = psutil.virtual_memory()
     win.addstr(3, 2, "Virtual Memory Statistics:", curses.A_BOLD)
@@ -211,14 +197,14 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
     win.addstr(startY, 2, "Top 5 CPU Processes:", curses.A_BOLD | curses.A_UNDERLINE)
 
-    # 1. Get all processes and sort them by CPU usage
+    # Get all processes and sort them by CPU usage
     processes = []
     for proc in psutil.process_iter(["pid", "name", "cpu_percent"]):
         processes.append(proc.info)
 
-    # 2. Filter out processes that haven't registered CPU time yet (0.0)
-    # 3. Sort by 'cpu_percent' in descending order
-    # 4. Take the top 5
+    # Filter out processes that haven't registered CPU time yet (0.0)
+    # Sort by 'cpu_percent' in descending order
+    # Take the top 5
     topProcesses = sorted(
         [
             p
@@ -252,13 +238,10 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
 def showThreadingExample(win, currentHeight, currentWidth) -> None:
     # print("Demonstrating Threading")
-
-    # TODO INSERT YOUR CODE HERE
-    """multi-threading demo."""
+ 
     global threadLog
 
-    # 1. Threading Demo
-    win.addstr(3, 2, "Demonstrating Threading:", curses.A_BOLD)
+    win.addstr(3, 2, "Threading Demonstration:", curses.A_BOLD)
 
     # Only run threads once
     if not threadLog:
@@ -271,10 +254,19 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
         thread1.join()
         thread2.join()
 
+    # Base row for the log messages is 4
+    log_start_row = 4
     for i, msg in enumerate(threadLog):
-        win.addstr(4 + i, 2, msg)
+        # Add log messages, performing a boundary check
+        if log_start_row + i < currentHeight - 1:
+            win.addstr(log_start_row + i, 2, msg)
 
-    # print("Done With Threading!")
+    # Calculate the row immediately following the last log message
+    done_message_row = log_start_row + len(threadLog)
+
+    # Print the "Done With Threading!" message using curses
+    if done_message_row < currentHeight - 1:
+        win.addstr(done_message_row, 2, "Done With Threading!", curses.A_BOLD)
 
 
 """
@@ -286,26 +278,10 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
 
 
 def showErrorHandling(win, currentHeight, currentWidth) -> None:
-    # print("Demonstrating Error Handling")
-    # try:
+   
+    # Display function title
+    win.addstr(8, 2, "Error Handling Demonstration:", curses.A_BOLD)
 
-    #    #TODO Insert your code here to cause a divide by zero error
-
-    # except ZeroDivisionError:
-    #     print("You can't divide by zero!")
-
-    # except MemoryError:
-    #     print("Memory Error!")
-
-    # else:
-    #     print("Result is", res)
-
-    # finally:
-    #     print("Execution complete.")
-
-    # printBlankLines(2)
-    # 2. Error Handling Demo
-    win.addstr(8, 2, "Error Handling Demo:", curses.A_BOLD)
     try:
         # Causing a divide by zero error
         result = 100 / 0
@@ -332,7 +308,7 @@ PAGES = [
     showErrorHandling,
 ]
 
-
+# User Interface Setup
 def cursesApp(stdscr):
 
     global currentPage
@@ -347,7 +323,7 @@ def cursesApp(stdscr):
         curses.use_default_colors()
         curses.init_pair(1, curses.COLOR_RED, -1)  # for errors
 
-    # resize variables
+    # Resize variables
     lastSizeHeight, lastSizeWidth = stdscr.getmaxyx()
     lastTime = time.time()
 
@@ -355,7 +331,7 @@ def cursesApp(stdscr):
         # Get current dimensions
         currentHeight, currentWidth = stdscr.getmaxyx()
 
-        # handle resizing
+        # Handle resizing
         if currentHeight != lastSizeHeight or currentWidth != lastSizeWidth:
             # Clear and redraw
             stdscr.erase()
@@ -399,7 +375,6 @@ def cursesApp(stdscr):
             if key == quitKey:
                 break
 
-            # --- NEW NUMERIC NAVIGATION LOGIC ---
             # Check for keys '1' through '5'
             if ord("1") <= key <= ord("5"):
                 # Convert the ASCII character code (e.g., ord('3')) to the integer value (3)
@@ -414,9 +389,7 @@ def cursesApp(stdscr):
 
 
 """
-   Main function, does not require modification.
-
-   This calls the specific functions.
+   Main function
 """
 
 def display_startup_banner():
@@ -432,7 +405,7 @@ def display_startup_banner():
     # Wait for the user to acknowledge the banner
     input()
 
-# Wanted to do something more fancy
+# Have Fancy User Interface in main
 if __name__ == "__main__":
 
     display_startup_banner()
