@@ -13,8 +13,9 @@ Description:  Each function that needs to be completed has a comment at the top 
 """
 References:
 - https://docs.python.org/3/howto/curses.html
-
-
+- https://psutil.readthedocs.io/en/latest/
+- https://docs.python.org/3/library/os.html
+-
 """
 
 import os
@@ -53,13 +54,13 @@ threadLog = []
 def bytesToGb(bytesVal):
     return round(bytesVal / (1024**3), 2) if bytesVal else 0.0
 
-
+# Helper function to draw a curses-based horizontal progress bar
 def drawBar(win, y, x, percent, length=30, fullChar="#"):
     fillLength = int(length * percent / 100)
     bar = fullChar * fillLength + " " * (length - fillLength)
     win.addstr(y, x, f"[{bar}] {percent:.1f}%")
 
-
+# Generates the entire colored/highlighted header bar for terminal navigation
 def getTitle(pageNumber, currentWidth):
     # Mapping the page index to a display number (1-based)
     pageMap = {
@@ -181,10 +182,11 @@ def getMemoryStatistics(win, currentHeight, currentWidth) -> None:
 
 def getCpuStatistics(win, currentHeight, currentWidth) -> None:
    
-    # 
+    # Get overall CPU usage percentage and the total number of logical cores
     cpuPercent = psutil.cpu_percent(interval=1)
     cpuCores = psutil.cpu_count(logical=True)
 
+    # Display the total logical core count and the overall CPU usage bar
     win.addstr(3, 2, f"Total CPU Cores (Logical): {cpuCores}", curses.A_BOLD)
     win.addstr(4, 2, "Overall Usage:")
     drawBar(win, 4, 18, cpuPercent)
@@ -242,6 +244,7 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
 def showThreadingExample(win, currentHeight, currentWidth) -> None:
  
+    # Declare 'threadLog' as a global variable to modify the list defined outside this function
     global threadLog
 
     win.addstr(3, 2, "Threading Demonstration:", curses.A_BOLD)
@@ -395,6 +398,7 @@ def cursesApp(stdscr):
    Main function
 """
 
+# Print a nice welcome banner
 def displayStartupBanner():
     """Prints a non-curses banner before starting the TUI application."""
     print("=" * 60)
@@ -413,6 +417,7 @@ if __name__ == "__main__":
 
     displayStartupBanner()
 
+    # Launch the curses app, handling errors like terminal failures or user interruption (Ctrl+C)
     try:
         curses.wrapper(cursesApp)
     except curses.error:
