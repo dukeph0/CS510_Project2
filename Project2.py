@@ -182,7 +182,7 @@ def getMemoryStatistics(win, currentHeight, currentWidth) -> None:
 def getCpuStatistics(win, currentHeight, currentWidth) -> None:
    
     # Get overall CPU usage percentage and the total number of logical cores
-    cpuPercent = psutil.cpu_percent(interval=1)
+    cpuPercent = psutil.cpu_percent(interval=0.5)
     cpuCores = psutil.cpu_count(logical=True)
 
     # Display the total logical core count and the overall CPU usage bar
@@ -191,7 +191,7 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
     drawBar(win, 4, 18, cpuPercent)
 
     # Per-core usage (display max 8 cores for simple layout)
-    perCpu = psutil.cpu_percent(interval=1, percpu=True)
+    perCpu = psutil.cpu_percent(interval=0.5, percpu=True)
     win.addstr(6, 2, "Per-Core Usage:", curses.A_UNDERLINE)
     for i, p in enumerate(perCpu[:8]):
         win.addstr(7 + i, 2, f"Core {i}:")
@@ -332,7 +332,7 @@ def showErrorHandling(win, currentHeight, currentWidth) -> None:
         timingMessage = f"Execution Time: {elapsedTime:.3f} ms"
         win.addstr(10, 2, timingMessage)
 
-        win.addstr(11, 2, "NOTE: Time updates on every screen refresh.")
+        win.addstr(11, 2, "(NOTE: Time updates on every screen refresh.)")
 
 # Function map for five page applications 
 PAGES = [
