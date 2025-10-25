@@ -10,6 +10,13 @@ Description:  Each function that needs to be completed has a comment at the top 
               insert your code as per the instructions.
 """
 
+"""
+References:
+- https://docs.python.org/3/howto/curses.html
+
+
+"""
+
 import os
 import time
 import psutil  # requires pip install
@@ -20,7 +27,6 @@ import curses
 """
   Provided Utility functions
 """
-
 
 def printMsg1(num):
     time.sleep(0.01)  # Small delay to ensure both threads run
@@ -89,7 +95,7 @@ def getTitle(pageNumber, currentWidth):
 
 
 """
-   TODO This function will display information about a file, size and file information.
+   This function will display information about a file, size and file information.
    You can provide your own or use the projecttwo.txt file.
 
    Use psutil to get initial file information.
@@ -101,7 +107,6 @@ def getFileDiskUsageStatistics(win, currentHeight, currentWidth) -> None:
     file_name = "./projecttwo.txt"
     yStart = 3
 
-    # TODO INSERT YOUR CODE HERE
     win.addstr(
         yStart,
         2,
@@ -152,7 +157,7 @@ def getFileDiskUsageStatistics(win, currentHeight, currentWidth) -> None:
 
 
 """
-   TODO This should use psutil to retrieve standard and 
+   This should use psutil to retrieve standard and 
    virtual memory statistics
 """
 
@@ -169,15 +174,14 @@ def getMemoryStatistics(win, currentHeight, currentWidth) -> None:
 
 
 """
-   TODO This should use psutil to retrieve CPU statistics, including
+   This should use psutil to retrieve CPU statistics, including
    information on processes.
 """
 
 
 def getCpuStatistics(win, currentHeight, currentWidth) -> None:
-    # print("Getting CPU Statistics")
-
-    # TODO INSERT YOUR CODE HERE
+   
+    # 
     cpuPercent = psutil.cpu_percent(interval=1)
     cpuCores = psutil.cpu_count(logical=True)
 
@@ -215,7 +219,7 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
         reverse=True,
     )[:5]
 
-    # 3. Display the top 5 processes
+    # Display the top 5 processes
     win.addstr(startY + 1, 2, f"{'PID':<6} {'CPU %':<8} {'Name'}")
 
     for i, p in enumerate(topProcesses):
@@ -226,7 +230,7 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
 
 """
-   TODO This function will show multi threading capabilities.
+   This function will show multi threading capabilities.
 
    Two threads should be created.
     
@@ -237,7 +241,6 @@ def getCpuStatistics(win, currentHeight, currentWidth) -> None:
 
 
 def showThreadingExample(win, currentHeight, currentWidth) -> None:
-    # print("Demonstrating Threading")
  
     global threadLog
 
@@ -270,7 +273,7 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
 
 
 """
-   TODO This function shows system error handling.
+   This function shows system error handling.
 
    Since out of memory, or out of disk space errors are difficult to create,
    we will use a divide by zero error and show the error handling being executed.
@@ -299,7 +302,7 @@ def showErrorHandling(win, currentHeight, currentWidth) -> None:
     finally:
         win.addstr(13, 2, "Execution complete.")
 
-
+# Function map for five page applications 
 PAGES = [
     getCpuStatistics,
     getMemoryStatistics,
@@ -398,7 +401,7 @@ def display_startup_banner():
     print("━┏┛┏━┛┏━┛┃ ┃┏━┛┏━┛┏━┛┃ ┃┏━┃┏━┛  ┏━┛┏━┃┃  ┃ ┃━┏┛┛┏━┃┏━ ┏━┛")
     print(" ┃ ┏━┛┃  ┏━┃━━┃┏━┛┃  ┃ ┃┏┏┛┏━┛  ━━┃┃ ┃┃  ┃ ┃ ┃ ┃┃ ┃┃ ┃━━┃")
     print(" ┛ ━━┛━━┛┛ ┛━━┛━━┛━━┛━━┛┛ ┛━━┛  ━━┛━━┛━━┛━━┛ ┛ ┛━━┛┛ ┛━━┛")
-    print(" CS510: System Optimization Benchmarker")
+    print(" SNHU CS510: System Optimization Benchmarker")
     print("=" * 60)
     print("\nStarting application... Press Enter to continue.")
 
