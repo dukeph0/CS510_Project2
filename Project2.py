@@ -315,7 +315,7 @@ PAGES = [
 
 # User Interface Setup
 def cursesApp(stdscr):
-
+    # Declare 'currentPage' as a global variable to modify the list defined outside this function
     global currentPage
 
     # Curses setup
