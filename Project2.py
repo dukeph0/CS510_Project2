@@ -14,7 +14,7 @@ References:
 - https://docs.python.org/3/howto/curses.html
 - https://psutil.readthedocs.io/en/latest/
 - https://docs.python.org/3/library/os.html
--
+- https://docs.python.org/3/library/threading.html
 """
 
 import os
