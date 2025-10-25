@@ -283,24 +283,24 @@ def showThreadingExample(win, currentHeight, currentWidth) -> None:
 def showErrorHandling(win, currentHeight, currentWidth) -> None:
    
     # Display function title
-    win.addstr(8, 2, "Error Handling Demonstration:", curses.A_BOLD)
+    win.addstr(3, 2, "Error Handling Demonstration:", curses.A_BOLD)
 
     try:
         # Causing a divide by zero error
         result = 100 / 0
-        win.addstr(10, 2, f"Result is {result}")
+        win.addstr(5, 2, f"Result is {result}")
 
     except ZeroDivisionError:
         win.addstr(
-            10, 2, "ZeroDivisionError caught:", curses.color_pair(1) | curses.A_BOLD
+            5, 2, "ZeroDivisionError caught:", curses.color_pair(1) | curses.A_BOLD
         )
-        win.addstr(11, 2, "You can't divide by zero!")
+        win.addstr(6, 2, "You can't divide by zero!")
 
     except Exception as e:
-        win.addstr(10, 2, f"Other Error: {e}")
+        win.addstr(5, 2, f"Other Error: {e}")
 
     finally:
-        win.addstr(13, 2, "Execution complete.")
+        win.addstr(8, 2, "Execution complete.", curses.A_BOLD)
 
 # Function map for five page applications 
 PAGES = [
@@ -382,11 +382,11 @@ def cursesApp(stdscr):
             if ord("1") <= key <= ord("5"):
                 # Convert the ASCII character code (e.g., ord('3')) to the integer value (3)
                 # Subtract 1 to get the 0-based index (e.g., 3 - 1 = index 2)
-                new_page_index = key - ord("1")
+                newPageIndex = key - ord("1")
 
                 # Check if the calculated index is within the defined pageCount
-                if 0 <= new_page_index < pageCount:
-                    currentPage = new_page_index
+                if 0 <= newPageIndex < pageCount:
+                    currentPage = newPageIndex
 
         time.sleep(0.1)
 
@@ -395,7 +395,7 @@ def cursesApp(stdscr):
    Main function
 """
 
-def display_startup_banner():
+def displayStartupBanner():
     """Prints a non-curses banner before starting the TUI application."""
     print("=" * 60)
     print("━┏┛┏━┛┏━┛┃ ┃┏━┛┏━┛┏━┛┃ ┃┏━┃┏━┛  ┏━┛┏━┃┃  ┃ ┃━┏┛┛┏━┃┏━ ┏━┛")
@@ -411,7 +411,7 @@ def display_startup_banner():
 # Have Fancy User Interface in main
 if __name__ == "__main__":
 
-    display_startup_banner()
+    displayStartupBanner()
 
     try:
         curses.wrapper(cursesApp)
