@@ -54,7 +54,7 @@ def bytesToGb(bytesVal):
     return round(bytesVal / (1024**3), 2) if bytesVal else 0.0
 
 # Helper function to draw a curses-based horizontal progress bar
-def drawBar(win, y, x, percent, length=30, fullChar="#"):
+def drawBar(win, y, x, percent, length=30, fullChar="|"):
     fillLength = int(length * percent / 100)
     bar = fullChar * fillLength + " " * (length - fillLength)
     win.addstr(y, x, f"[{bar}] {percent:.1f}%")
@@ -164,13 +164,30 @@ def getFileDiskUsageStatistics(win, currentHeight, currentWidth) -> None:
 
 def getMemoryStatistics(win, currentHeight, currentWidth) -> None:
     
-    # Memory Stats
+    # Get detailed virtual memory statistics
     mem = psutil.virtual_memory()
+
     win.addstr(3, 2, "Virtual Memory Statistics:", curses.A_BOLD)
-    win.addstr(4, 2, "Total:")
-    win.addstr(4, 10, f"{bytesToGb(mem.total):.2f} GB")
-    win.addstr(5, 2, "Usage:")
-    drawBar(win, 5, 10, mem.percent)
+    
+    # Calculate Total Memory
+    total_gb = bytesToGb(mem.total)
+    win.addstr(4, 2, "Total Memory:")
+    win.addstr(4, 18, f"{total_gb:.2f} GB")
+
+    # Calculate Used Memory
+    used_gb = bytesToGb(mem.used)
+    win.addstr(5, 2, "Used Memory:")
+    win.addstr(5, 18, f"{used_gb:.2f} GB")
+
+    # Calculate Available Memory
+    available_gb = bytesToGb(mem.available)
+    win.addstr(6, 2, "Available:")
+    win.addstr(6, 18, f"{available_gb:.2f} GB")
+
+    # 4. Overall Usage Percentage (with bar)
+    usage_percent = mem.percent
+    win.addstr(8, 2, "Usage Percentage:")
+    drawBar(win, 8, 18, usage_percent) 
 
 
 """
@@ -399,7 +416,7 @@ def cursesApp(stdscr):
         stdscr.addstr(
             currentHeight - 1,
             2,
-            f"Click through 1-5 for different options| Press 'q' to QUIT | Screen: {currentWidth}X{currentHeight}",
+            f" Click through 1-5 for different options | Press 'q' to QUIT | Screen: {currentWidth}X{currentHeight} ",
         )
 
         stdscr.refresh()
